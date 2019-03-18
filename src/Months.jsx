@@ -73,13 +73,28 @@ export default class Mes extends Component {
 
   render() {
     const { mes } = this.state;
+    var aux = 1
 
     return (
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         {mes.map((e, i) => {
-          return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+          if (i === 0 && moment(e.date).dayOfYear() !== aux) {
+            aux = aux +1;
+            return (
+              <div style={{display:'flex', flexDirection:'row'}}>
+                <div style={style.color0}></div>
+                <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                  <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
+                  </div></Tooltip>
+              </div>)
+             
+          }else{
+            aux = 1
+            return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
             <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
             </div></Tooltip>
+          }
+          
         })
         }
       </div>
