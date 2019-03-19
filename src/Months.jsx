@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import moment from 'moment';
 import { Tooltip } from 'antd';
 
+var valid = false;
+
 export default class Mes extends Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      mes: [],
+      mes: []
     }
   }
+
 
   getLine(mes) {
     var index = 0;
@@ -72,30 +75,42 @@ export default class Mes extends Component {
   }
 
   render() {
-    const { mes } = this.state;
-    var aux = 1
+    var { mes } = this.state;
 
     return (
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {mes.map((e, i) => {
-          if (i === 0 && moment(e.date).dayOfYear() !== aux) {
-            aux = aux +1;
-            return (
-              <div style={{display:'flex', flexDirection:'row'}}>
-                <div style={style.color0}></div>
-                <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
-                  <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
-                  </div></Tooltip>
-              </div>)
-             
-          }else{
-            aux = 1
-            return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
-            <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
-            </div></Tooltip>
-          }
-          
-        })
+        {
+
+          mes.map((e, i) => {
+
+            if ((i === 0 && moment(e.date).dayOfYear() === 1)) {
+              if (valid !== true) {
+                valid = true
+              }
+            }
+
+            if (valid) {
+              return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
+                </div></Tooltip>
+            }else{
+              if(i==0){
+                return (
+                  <div key={i} style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div style={style.color0}></div>
+                    <Tooltip title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                      <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
+                      </div></Tooltip>
+                  </div>)
+              }else{
+              return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+              <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
+              </div></Tooltip>
+              }
+            }
+
+
+          })
         }
       </div>
     )
@@ -141,4 +156,6 @@ const style = {
   }
 
 }
+
+
 
