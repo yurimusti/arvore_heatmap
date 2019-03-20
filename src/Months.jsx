@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment';
 import { Tooltip } from 'antd';
 
-var valid = false;
+
 
 export default class Mes extends Component {
 
@@ -10,91 +10,38 @@ export default class Mes extends Component {
     super(props)
 
     this.state = {
-      mes: []
+      mes: [],
+      valid: false
     }
   }
-
-
-  getLine(mes) {
-    var index = 0;
-    const { data } = this.props;
-    console.log(moment(data[0].date).weekday())
-    switch (mes) {
-      case 'domingo':
-        index = 1
-        break;
-
-      case 'segunda':
-        index = 2;
-        break;
-
-      case 'terca':
-        index = 3;
-        break;
-
-      case 'quarta':
-        index = 4;
-        break;
-
-      case 'quinta':
-        index = 5;
-        break;
-
-      case 'sexta':
-        index = 6;
-        break;
-
-      case 'sabado':
-        index = 7;
-        break;
-
-      default:
-        break
-    }
-    var list = []
-    data.map((e) => {
-      const d = moment(e.date).isoWeekday()
-      if (d === index) {
-        list.push(e);
-      }
-    });
-
-    this.setState({ mes: list })
-  }
-
-  componentWillMount() {
-
-    const { type } = this.props;
-    this.getLine(type)
-
-  }
-
   componentWillReceiveProps() {
-    const { type } = this.props;
-    this.getLine(type)
+    this.setState({
+      valid: false
+    })
   }
-
   render() {
-    var { mes } = this.state;
-
+    var { data } = this.props;
     return (
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         {
-
-          mes.map((e, i) => {
-
-            if ((i === 0 && moment(e.date).dayOfYear() === 1)) {
-              if (valid !== true) {
-                valid = true
+          data.map((e, i) => {
+            const dayOfYear = moment(e.date).dayOfYear()
+            if ((i === 0 && dayOfYear === 1)) {
+              if (this.state.valid === false) {
+                console.log(dayOfYear)
+                this.setState({
+                  valid: true
+                })
               }
+
             }
 
-            if (valid) {
+            if (this.state.valid) {
               return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
                 <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
                 </div></Tooltip>
-            }else{
-              if(i==0){
+            } else {
+              if (i == 0) {
                 return (
                   <div key={i} style={{ display: 'flex', flexDirection: 'row' }}>
                     <div style={style.color0}></div>
@@ -102,16 +49,21 @@ export default class Mes extends Component {
                       <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
                       </div></Tooltip>
                   </div>)
-              }else{
-              return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
-              <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
-              </div></Tooltip>
+              } else {
+                return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                  <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
+                  </div></Tooltip>
               }
             }
 
 
+
+
           })
+
+
         }
+
       </div>
     )
   }

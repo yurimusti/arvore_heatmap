@@ -14,7 +14,8 @@ class App extends Component {
       years: [],
       currentYear: "",
       listMonth: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-      days: ["Seg", "Ter", "Qua"]
+      days: ["Seg", "Ter", "Qua"],
+      isChange: false
     }
   }
 
@@ -32,17 +33,15 @@ class App extends Component {
   }
 
   _handleChangeYear(currentYear){
-    const {dataAll} = this.state;
-    const data = getAllDatesFromSelect(currentYear, dataAll)
-    this.setState({data, currentYear})
+    this.setState({isChange: true, currentYear})
   }
 
   render() {
-    const { data, years, listMonth, days } = this.state;
+    var { isChange, years, listMonth, days, currentYear } = this.state;
     return (
       <div style={{ display: 'flex', flex: 1, flexDirection: 'row', justifyContent:'center',alignItems:'center', height:'100vh' }}>
         <div style={{ display:'flex', flex: 8, justifyContent: 'center' }}>
-          <Grafico data={data} listMonth={listMonth} days={days} />
+          <Grafico isChange={isChange} currentYear={currentYear} listMonth={listMonth} days={days} />
         </div>
         <div style={{ flex: 1 }}>
           <div style={{display:'flex', flexDirection:'column', margin:30}}> {years.map((e,i) => <Button onClick={()=> this._handleChangeYear(e)} key={i} style={{margin:10}} type="primary">{e}</Button>)}</div>
