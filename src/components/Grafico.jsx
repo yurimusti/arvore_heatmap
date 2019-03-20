@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Months from './Months';
-import { populaAnosInicio, getAllDatesFromSelect } from './utils'
+import { populaAnosInicio, getAllDatesFromSelect } from '../utils'
 import moment from 'moment';
-
 
 export default class Grafico extends Component {
 
@@ -79,14 +78,13 @@ export default class Grafico extends Component {
                         })}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-
-                        <Months data={listSegunda} />
-                        <Months data={listTerca} />
-                        <Months data={listQuarta} />
-                        <Months data={listQuinta} />
-                        <Months data={listSexta} />
-                        <Months data={listSabado} />
-                        <Months data={listDomingo} />
+                        <Months data={listSegunda} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
+                        <Months data={listTerca} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
+                        <Months data={listQuarta} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
+                        <Months data={listQuinta} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
+                        <Months data={listSexta} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
+                        <Months data={listSabado} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
+                        <Months data={listDomingo} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
                     </div>
                 </div>
             </div>

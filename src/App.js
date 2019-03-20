@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Grafico from './Grafico';
-import { populaAnosInicio, getYearsFromJson, getAllDatesFromSelect } from './utils';
+import Grafico from './components/Grafico';
 import { Button } from 'antd';
-import moment from 'moment';
+import { populaAnosInicio, getYearsFromJson, getAllDatesFromSelect } from './utils';
+import { DAYS, LIST_MONTH } from './utils/const';
 
 class App extends Component {
 
@@ -13,8 +13,8 @@ class App extends Component {
       data:[],
       years: [],
       currentYear: "",
-      listMonth: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-      days: ["Seg", "Ter", "Qua"],
+      listMonth: LIST_MONTH,
+      days: DAYS,
       isChange: false
     }
   }

@@ -14,11 +14,17 @@ export default class Mes extends Component {
       valid: false
     }
   }
+
+  componentDidMount(){
+    console.log(this.props.valid)
+  }
+
   componentWillReceiveProps() {
     this.setState({
       valid: false
     })
   }
+
   render() {
     var { data } = this.props;
     return (
@@ -28,10 +34,10 @@ export default class Mes extends Component {
             const dayOfYear = moment(e.date).dayOfYear()
             if ((i === 0 && dayOfYear === 1)) {
               if (this.state.valid === false) {
-                console.log(dayOfYear)
                 this.setState({
                   valid: true
                 })
+                //this.props.changeValid(this.state.valid)
               }
 
             }
