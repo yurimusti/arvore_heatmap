@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Months from './Months';
-import { populaAnosInicio, getAllDatesFromSelect } from '../utils'
+import Months from '../month';
+import { populaAnosInicio, getAllDatesFromSelect } from '../../utils'
 import moment from 'moment';
+import { connect } from 'react-redux';
 
-export default class Grafico extends Component {
+class Grafico extends Component {
 
     constructor() {
         super();
-
         this.state = {
             data: [],
         }
@@ -43,10 +43,10 @@ export default class Grafico extends Component {
         this.setState({
             listSegunda,
             listTerca,
-            listQuarta, 
-            listQuinta, 
-            listSexta, 
-            listSabado, 
+            listQuarta,
+            listQuinta,
+            listSexta,
+            listSabado,
             listDomingo,
             valid: false
         });
@@ -78,16 +78,24 @@ export default class Grafico extends Component {
                         })}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <Months data={listSegunda} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
-                        <Months data={listTerca} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
-                        <Months data={listQuarta} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
-                        <Months data={listQuinta} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
-                        <Months data={listSexta} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
-                        <Months data={listSabado} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
-                        <Months data={listDomingo} changeValid={(e)=> this.setState({valid: e})} valid={valid}/>
+                        <Months data={listSegunda} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
+                        <Months data={listTerca} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
+                        <Months data={listQuarta} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
+                        <Months data={listQuinta} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
+                        <Months data={listSexta} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
+                        <Months data={listSabado} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
+                        <Months data={listDomingo} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+const mapState = state => ({
+    currentYear: state.currentYear
+})
+
+
+
+export default connect(mapState)(Grafico)

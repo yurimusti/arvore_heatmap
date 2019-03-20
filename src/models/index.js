@@ -1,7 +1,9 @@
-import Graph from './graph/index'
+import currentYear from './currentYear'
+import isValidMonth from './isValidMonth'
 
 const models = {
-  Graph
+  currentYear,
+  isValidMonth
 };
 
 export default models;

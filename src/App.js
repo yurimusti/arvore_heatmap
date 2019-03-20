@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Grafico from './components/Grafico';
+import { connect } from 'react-redux';
+import Grafico from './components/grafico';
 import { Button } from 'antd';
 import { populaAnosInicio, getYearsFromJson, getAllDatesFromSelect } from './utils';
 import { DAYS, LIST_MONTH } from './utils/const';
@@ -12,7 +13,6 @@ class App extends Component {
       dataAll: [],
       data:[],
       years: [],
-      currentYear: "",
       listMonth: LIST_MONTH,
       days: DAYS,
       isChange: false
@@ -20,28 +20,30 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const dataAll = populaAnosInicio();
+    const {changeCurrentYear, currentYear} = this.props
     const years = getYearsFromJson();
-    const currentYear = years[0];
+    changeCurrentYear(years[0])
+    
+    const dataAll = populaAnosInicio();
     const data = getAllDatesFromSelect(currentYear, dataAll)
     this.setState({
       dataAll,
       years,
-      currentYear,
       data
     })
   }
 
   _handleChangeYear(currentYear){
-    this.setState({isChange: true, currentYear})
+    const {changeCurrentYear} = this.props
+    changeCurrentYear(currentYear)
   }
 
   render() {
-    var { isChange, years, listMonth, days, currentYear } = this.state;
+    var { isChange, years, listMonth, days } = this.state;
     return (
       <div style={{ display: 'flex', flex: 1, flexDirection: 'row', justifyContent:'center',alignItems:'center', height:'100vh' }}>
         <div style={{ display:'flex', flex: 8, justifyContent: 'center' }}>
-          <Grafico isChange={isChange} currentYear={currentYear} listMonth={listMonth} days={days} />
+          <Grafico isChange={isChange} listMonth={listMonth} days={days} />
         </div>
         <div style={{ flex: 1 }}>
           <div style={{display:'flex', flexDirection:'column', margin:30}}> {years.map((e,i) => <Button onClick={()=> this._handleChangeYear(e)} key={i} style={{margin:10}} type="primary">{e}</Button>)}</div>
@@ -51,4 +53,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapState = state => ({
+  currentYear: state.currentYear
+})
+
+const mapDispatch = ({ currentYear: { changeCurrentYear }}) => ({
+  changeCurrentYear: (value) => changeCurrentYear(value),
+})
+
+
+export default connect(mapState, mapDispatch)(App);
