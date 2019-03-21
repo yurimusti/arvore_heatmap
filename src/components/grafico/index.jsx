@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Months from '../month';
+import Months from '../Month';
 import { populaAnosInicio, getAllDatesFromSelect } from '../../utils'
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -10,34 +10,129 @@ class Grafico extends Component {
         super();
         this.state = {
             data: [],
+            valid: false
         }
     }
 
     inicializaGrafico(currentYear) {
-
         const dataAll = populaAnosInicio();
         const data = getAllDatesFromSelect(currentYear, dataAll)
 
-        var listSegunda = []
-        var listTerca = []
-        var listQuarta = []
-        var listQuinta = []
-        var listSexta = []
-        var listSabado = []
-        var listDomingo = []
+        var listSegunda = [], listTerca = [], listQuarta = [], listQuinta = [], listSexta = [], listSabado = [], listDomingo = [];
+        var listAuxSegunda = [], listAuxTerca = [], listAuxQuarta = [], listAuxQuinta = [], listAuxSexta = [], listAuxSabado = [], listAuxDomingo = [];
 
         data.map((e) => {
             const d = moment(e.date).isoWeekday()
             switch (d) {
-                case 1: listSegunda.push(e); break
-                case 2: listTerca.push(e); break
-                case 3: listQuarta.push(e); break
-                case 4: listQuinta.push(e); break
-                case 5: listSexta.push(e); break
-                case 6: listSabado.push(e); break
-                case 7: listDomingo.push(e); break
+                case 1: listAuxSegunda.push(e); break
+                case 2: listAuxTerca.push(e); break
+                case 3: listAuxQuarta.push(e); break
+                case 4: listAuxQuinta.push(e); break
+                case 5: listAuxSexta.push(e); break
+                case 6: listAuxSabado.push(e); break
+                case 7: listAuxDomingo.push(e); break
                 default: break;
             }
+        })
+     
+        listAuxSegunda.map((e)=>{
+            const dayOfYear = moment(e.date).dayOfYear()
+            if(dayOfYear === 1){
+                this.state.valid = true
+            }
+
+            var aux = {
+                date: e.date,
+                count: e.count,
+                valid: this.state.valid
+            }
+            listSegunda.push(aux)
+        })
+
+        listAuxTerca.map((e)=>{
+            const dayOfYear = moment(e.date).dayOfYear()
+            if(dayOfYear === 1){
+                this.state.valid = true
+            }
+
+            var aux = {
+                date: e.date,
+                count: e.count,
+                valid: this.state.valid
+            }
+            listTerca.push(aux)
+        })
+
+        listAuxQuarta.map((e)=>{
+            const dayOfYear = moment(e.date).dayOfYear()
+            if(dayOfYear === 1){
+                this.state.valid = true
+            }
+
+            var aux = {
+                date: e.date,
+                count: e.count,
+                valid: this.state.valid
+            }
+            listQuarta.push(aux)
+        })
+
+        listAuxQuinta.map((e)=>{
+            const dayOfYear = moment(e.date).dayOfYear()
+            if(dayOfYear === 1){
+                this.state.valid = true
+            }
+
+            var aux = {
+                date: e.date,
+                count: e.count,
+                valid: this.state.valid
+            }
+            listQuinta.push(aux)
+        })
+        
+        listAuxSexta.map((e)=>{
+            const dayOfYear = moment(e.date).dayOfYear()
+            if(dayOfYear === 1){
+                this.state.valid = true
+            }
+
+            var aux = {
+                date: e.date,
+                count: e.count,
+                valid: this.state.valid
+            }
+            listSexta.push(aux)
+        })
+
+        listAuxSabado.map((e)=>{
+            const dayOfYear = moment(e.date).dayOfYear()
+
+            if(dayOfYear === 1){
+                this.state.valid = true
+            }
+
+            var aux = {
+                date: e.date,
+                count: e.count,
+                valid: this.state.valid
+            }
+            listSabado.push(aux)
+        })
+
+        listAuxDomingo.map((e)=>{
+            const dayOfYear = moment(e.date).dayOfYear()
+
+            if(dayOfYear === 1){
+                this.state.valid = true
+            }
+
+            var aux = {
+                date: e.date,
+                count: e.count,
+                valid: this.state.valid
+            }
+            listDomingo.push(aux)
         })
 
         this.setState({
@@ -47,9 +142,10 @@ class Grafico extends Component {
             listQuinta,
             listSexta,
             listSabado,
-            listDomingo,
-            valid: false
-        });
+            listDomingo
+        })
+
+        this.state.valid = false;
     }
 
     componentWillMount() {
@@ -60,10 +156,9 @@ class Grafico extends Component {
         this.inicializaGrafico(nextProps.currentYear);
     }
 
-
     render() {
         const { listMonth, days } = this.props;
-        const { listSegunda, listTerca, listQuarta, listQuinta, listSexta, listSabado, listDomingo, valid } = this.state;
+        const { listSegunda, listTerca, listQuarta, listQuinta, listSexta, listSabado, listDomingo } = this.state;
         return (
             <div style={{ display: 'flex', flexDirection: 'row', padding: 40, borderWidth: 1, borderColor: '#ccc', borderStyle: 'solid', borderRadius: 5 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: 15, marginRight: 10 }}>
@@ -78,13 +173,13 @@ class Grafico extends Component {
                         })}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <Months data={listSegunda} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
-                        <Months data={listTerca} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
-                        <Months data={listQuarta} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
-                        <Months data={listQuinta} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
-                        <Months data={listSexta} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
-                        <Months data={listSabado} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
-                        <Months data={listDomingo} changeValid={(e) => this.setState({ valid: e })} valid={valid} />
+                        <Months data={listSegunda} />
+                        <Months data={listTerca} />
+                        <Months data={listQuarta} />
+                        <Months data={listQuinta} />
+                        <Months data={listSexta} />
+                        <Months data={listSabado} />
+                        <Months data={listDomingo} />
                     </div>
                 </div>
             </div>

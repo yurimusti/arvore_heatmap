@@ -1,16 +1,8 @@
-const month = {
-	state: false
-			// listMonday: [], 
-			// listTuesday: [],
-			// listWednesday: [],
-			// listThursday: [],
-			// listFriday: [],
-			// listSaturday: [],
-			// listSunday: []
-	,
+const valid = {
+	state: false,
 	reducers: {
-		isValid(state, payload) {
-			return payload
+		changeIsValid(state, payload) {
+			return !payload
 		}
 	},
 	effects: dispatch => ({
@@ -23,4 +15,4 @@ const month = {
 	}),
 }
 
-export default month
+export default valid

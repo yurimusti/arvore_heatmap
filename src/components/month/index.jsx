@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import moment from 'moment';
 import { Tooltip } from 'antd';
+import { connect } from 'react-redux';
 
-
-
-export default class Mes extends Component {
+class Mes extends Component {
 
   constructor(props) {
     super(props)
@@ -15,34 +14,13 @@ export default class Mes extends Component {
     }
   }
 
-  componentDidMount(){
-    console.log(this.props.valid)
-  }
-
-  componentWillReceiveProps() {
-    this.setState({
-      valid: false
-    })
-  }
-
   render() {
     var { data } = this.props;
     return (
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         {
           data.map((e, i) => {
-            const dayOfYear = moment(e.date).dayOfYear()
-            if ((i === 0 && dayOfYear === 1)) {
-              if (this.state.valid === false) {
-                this.setState({
-                  valid: true
-                })
-                //this.props.changeValid(this.state.valid)
-              }
-
-            }
-
-            if (this.state.valid) {
+            if (e.valid) {
               return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
                 <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
                 </div></Tooltip>
@@ -61,19 +39,23 @@ export default class Mes extends Component {
                   </div></Tooltip>
               }
             }
-
-
-
-
           })
-
-
         }
-
       </div>
     )
   }
 }
+
+const mapState = state => ({
+  valid: state.valid,
+})
+
+const mapDispatch = ({ valid: { changeIsValid } }) => ({
+  changeIsValid: () => changeIsValid()
+})
+
+
+export default connect(mapState, mapDispatch)(Mes)
 
 const style = {
   color0: {

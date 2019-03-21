@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Grafico from './components/grafico';
+import Grafico from './components/Grafico';
 import { Button } from 'antd';
 import { populaAnosInicio, getYearsFromJson, getAllDatesFromSelect } from './utils';
 import { DAYS, LIST_MONTH } from './utils/const';
@@ -15,7 +15,6 @@ class App extends Component {
       years: [],
       listMonth: LIST_MONTH,
       days: DAYS,
-      isChange: false
     }
   }
 
@@ -39,11 +38,11 @@ class App extends Component {
   }
 
   render() {
-    var { isChange, years, listMonth, days } = this.state;
+    var { years, listMonth, days } = this.state;
     return (
       <div style={{ display: 'flex', flex: 1, flexDirection: 'row', justifyContent:'center',alignItems:'center', height:'100vh' }}>
         <div style={{ display:'flex', flex: 8, justifyContent: 'center' }}>
-          <Grafico isChange={isChange} listMonth={listMonth} days={days} />
+          <Grafico listMonth={listMonth} days={days} />
         </div>
         <div style={{ flex: 1 }}>
           <div style={{display:'flex', flexDirection:'column', margin:30}}> {years.map((e,i) => <Button onClick={()=> this._handleChangeYear(e)} key={i} style={{margin:10}} type="primary">{e}</Button>)}</div>

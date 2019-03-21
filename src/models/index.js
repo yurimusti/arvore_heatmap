@@ -1,9 +1,9 @@
 import currentYear from './currentYear'
-import isValidMonth from './isValidMonth'
+import valid from './isValidMonth'
 
 const models = {
   currentYear,
-  isValidMonth
+  valid
 };
 
 export default models;
