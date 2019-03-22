@@ -25,7 +25,7 @@ class Mes extends Component {
                 <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
                 </div></Tooltip>
             } else {
-              if (i == 0) {
+              if (i === 0) {
                 return (
                   <div key={i} style={{ display: 'flex', flexDirection: 'row' }}>
                     <div style={style.color0}></div>

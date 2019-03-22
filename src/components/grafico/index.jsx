@@ -10,7 +10,8 @@ class Grafico extends Component {
         super();
         this.state = {
             data: [],
-            valid: false
+            valid: false,
+            listSegunda: [], listTerca: [], listQuarta: [], listQuinta: [], listSexta: [], listSabado: [], listDomingo: []
         }
     }
 
@@ -21,25 +22,17 @@ class Grafico extends Component {
         var listSegunda = [], listTerca = [], listQuarta = [], listQuinta = [], listSexta = [], listSabado = [], listDomingo = [];
         var listAuxSegunda = [], listAuxTerca = [], listAuxQuarta = [], listAuxQuinta = [], listAuxSexta = [], listAuxSabado = [], listAuxDomingo = [];
 
-        data.map((e) => {
-            const d = moment(e.date).isoWeekday()
-            switch (d) {
-                case 1: listAuxSegunda.push(e); break
-                case 2: listAuxTerca.push(e); break
-                case 3: listAuxQuarta.push(e); break
-                case 4: listAuxQuinta.push(e); break
-                case 5: listAuxSexta.push(e); break
-                case 6: listAuxSabado.push(e); break
-                case 7: listAuxDomingo.push(e); break
-                default: break;
-            }
-        })
+        listAuxSegunda = data.filter((e)=> moment(e.date).isoWeekday() === 1 );
+        listAuxTerca = data.filter((e)=> moment(e.date).isoWeekday() === 2 );
+        listAuxQuarta = data.filter((e)=> moment(e.date).isoWeekday() === 3 );
+        listAuxQuinta = data.filter((e)=> moment(e.date).isoWeekday() === 4 );
+        listAuxSexta = data.filter((e)=> moment(e.date).isoWeekday() === 5 );
+        listAuxSabado = data.filter((e)=> moment(e.date).isoWeekday() === 6 );
+        listAuxDomingo = data.filter((e)=> moment(e.date).isoWeekday() === 7 );
      
         listAuxSegunda.map((e)=>{
             const dayOfYear = moment(e.date).dayOfYear()
-            if(dayOfYear === 1){
-                this.state.valid = true
-            }
+            dayOfYear === 1 && (this.state.valid = true)
 
             var aux = {
                 date: e.date,
@@ -51,9 +44,7 @@ class Grafico extends Component {
 
         listAuxTerca.map((e)=>{
             const dayOfYear = moment(e.date).dayOfYear()
-            if(dayOfYear === 1){
-                this.state.valid = true
-            }
+            dayOfYear === 1 && (this.state.valid = true)
 
             var aux = {
                 date: e.date,
@@ -65,9 +56,7 @@ class Grafico extends Component {
 
         listAuxQuarta.map((e)=>{
             const dayOfYear = moment(e.date).dayOfYear()
-            if(dayOfYear === 1){
-                this.state.valid = true
-            }
+            dayOfYear === 1 && (this.state.valid = true)
 
             var aux = {
                 date: e.date,
@@ -79,9 +68,7 @@ class Grafico extends Component {
 
         listAuxQuinta.map((e)=>{
             const dayOfYear = moment(e.date).dayOfYear()
-            if(dayOfYear === 1){
-                this.state.valid = true
-            }
+            dayOfYear === 1 && (this.state.valid = true)
 
             var aux = {
                 date: e.date,
@@ -93,9 +80,7 @@ class Grafico extends Component {
         
         listAuxSexta.map((e)=>{
             const dayOfYear = moment(e.date).dayOfYear()
-            if(dayOfYear === 1){
-                this.state.valid = true
-            }
+            dayOfYear === 1 && (this.state.valid = true)
 
             var aux = {
                 date: e.date,
@@ -107,10 +92,7 @@ class Grafico extends Component {
 
         listAuxSabado.map((e)=>{
             const dayOfYear = moment(e.date).dayOfYear()
-
-            if(dayOfYear === 1){
-                this.state.valid = true
-            }
+            dayOfYear === 1 && (this.state.valid = true)
 
             var aux = {
                 date: e.date,
@@ -122,10 +104,7 @@ class Grafico extends Component {
 
         listAuxDomingo.map((e)=>{
             const dayOfYear = moment(e.date).dayOfYear()
-
-            if(dayOfYear === 1){
-                this.state.valid = true
-            }
+            dayOfYear === 1 && (this.state.valid = true)
 
             var aux = {
                 date: e.date,
@@ -148,7 +127,7 @@ class Grafico extends Component {
         this.state.valid = false;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { currentYear } = this.props;
         this.inicializaGrafico(currentYear);
     }
