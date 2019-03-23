@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment';
 import { Tooltip } from 'antd';
+import { Main, Box, MainBoxError } from './style'
 import { connect } from 'react-redux';
 
 class Mes extends Component {
@@ -17,85 +18,41 @@ class Mes extends Component {
   render() {
     var { data } = this.props;
     return (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Main>
         {
           data.map((e, i) => {
             if (e.valid) {
-              return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
-                <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
-                </div></Tooltip>
+              return (
+                <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                  <Box count={e.count} />
+                </Tooltip>
+              );
             } else {
               if (i === 0) {
                 return (
-                  <div key={i} style={{ display: 'flex', flexDirection: 'row' }}>
-                    <div style={style.color0}></div>
+                  <MainBoxError key={i}>
+                    <Box red></Box>
                     <Tooltip title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
-                      <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
-                      </div></Tooltip>
-                  </div>)
+                      <Box count={e.count} /></Tooltip>
+                  </MainBoxError>
+                );
               } else {
-                return <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
-                  <div style={e.count == 0 ? style.color1 : e.count > 0 && e.count < 9 ? style.color2 : e.count < 18 ? style.color3 : e.count < 27 ? style.color4 : style.color5}>
-                  </div></Tooltip>
+                return (
+                  <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                    <Box count={e.count} />
+                  </Tooltip>
+                )
               }
             }
           })
         }
-      </div>
+      </Main>
     )
   }
 }
 
-const mapState = state => ({
-  valid: state.valid,
-})
 
-const mapDispatch = ({ valid: { changeIsValid } }) => ({
-  changeIsValid: () => changeIsValid()
-})
-
-
-export default connect(mapState, mapDispatch)(Mes)
-
-const style = {
-  color0: {
-    background: 'red',
-    margin: 1,
-    width: 10,
-    height: 10
-  },
-  color1: {
-    background: '#ccc',
-    margin: 1,
-    width: 10,
-    height: 10
-  },
-  color2: {
-    background: '#C6E48B',
-    margin: 1,
-    width: 10,
-    height: 10
-  },
-  color3: {
-    background: '#7BC96F',
-    margin: 1,
-    width: 10,
-    height: 10
-  },
-  color4: {
-    background: '#239A3B',
-    margin: 1,
-    width: 10,
-    height: 10
-  },
-  color5: {
-    background: '#196127',
-    margin: 1,
-    width: 10,
-    height: 10
-  }
-
-}
+export default Mes;
 
 
 

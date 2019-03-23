@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Months from '../Month';
 import { populaAnosInicio, getAllDatesFromSelect } from '../../utils'
 import moment from 'moment';
+import { Main, ListDays, ContentMonth, ListMonthNames, ListMonth  } from './style'
 import { connect } from 'react-redux';
 
 class Grafico extends Component {
@@ -139,19 +140,19 @@ class Grafico extends Component {
         const { listMonth, days } = this.props;
         const { listSegunda, listTerca, listQuarta, listQuinta, listSexta, listSabado, listDomingo } = this.state;
         return (
-            <div style={{ display: 'flex', flexDirection: 'row', padding: 40, borderWidth: 1, borderColor: '#ccc', borderStyle: 'solid', borderRadius: 5 }}>
-                <div style={{ display: 'flex', flexDirection: 'column', marginTop: 15, marginRight: 10 }}>
+            <Main>
+                <ListDays>
                     {days.map((e, i) => {
                         return <span key={i} style={{ marginTop: 8 }} >{e}</span>
                     })}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                </ListDays>
+                <ContentMonth>
+                    <ListMonthNames>
                         {listMonth.map((e, i) => {
                             return <span key={i} style={{ marginLeft: 27 }}>{e}</span>
                         })}
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    </ListMonthNames>
+                    <ListMonth>
                         <Months data={listSegunda} />
                         <Months data={listTerca} />
                         <Months data={listQuarta} />
@@ -159,9 +160,9 @@ class Grafico extends Component {
                         <Months data={listSexta} />
                         <Months data={listSabado} />
                         <Months data={listDomingo} />
-                    </div>
-                </div>
-            </div>
+                    </ListMonth>
+                </ContentMonth>
+            </Main>
         )
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { init } from '@rematch/core';
-import App from './App';
+import App from './components/App';
 import models from './models';
 import 'antd/dist/antd.css';
 

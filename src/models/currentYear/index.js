@@ -5,14 +5,8 @@ const currentYear = {
             return payload;
 		}
 	},
-	effects: dispatch => ({
-		// async asyncIncrement() {
-		// 	await new Promise(resolve => {
-		// 		setTimeout(resolve, 1000)
-		// 	})
-		// 	dispatch.count.increment()
-		// },
-	}),
+	// effects: dispatch => ({
+	// }),
 }
 
 export default currentYear
