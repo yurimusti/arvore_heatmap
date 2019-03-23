@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import moment from 'moment';
 import { Tooltip } from 'antd';
 import { Main, Box, MainBoxError } from './style'
-import { connect } from 'react-redux';
 
 class Mes extends Component {
 
@@ -23,7 +22,7 @@ class Mes extends Component {
           data.map((e, i) => {
             if (e.valid) {
               return (
-                <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                <Tooltip key={i} title={e.count === 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
                   <Box count={e.count} />
                 </Tooltip>
               );
@@ -32,13 +31,13 @@ class Mes extends Component {
                 return (
                   <MainBoxError key={i}>
                     <Box red></Box>
-                    <Tooltip title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                    <Tooltip title={e.count === 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
                       <Box count={e.count} /></Tooltip>
                   </MainBoxError>
                 );
               } else {
                 return (
-                  <Tooltip key={i} title={e.count == 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
+                  <Tooltip key={i} title={e.count === 0 ? "Contribuições: 0 - Data: " + moment(e.date).format('DD/MM/YYYY') : "Contribuições: " + e.count + " - Data: " + moment(e.date).format('DD/MM/YYYY')} >
                     <Box count={e.count} />
                   </Tooltip>
                 )
